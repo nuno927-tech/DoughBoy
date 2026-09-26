@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLuX Studios</title>
+<meta name="description" content="FLuX Studios makes simple, well-crafted apps. Crafted by One. Built for Many.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Pacifico&display=swap">
+<style>
+  :root {
+    --ground: #FBF8F4;
+    --paper: #FFFFFF;
+    --ink: #2B2724;
+    --muted: #6A615A;
+    --rule: #E8DFD6;
+    --tomato: #C23B1E;
+    --tomato-soft: #FBE9E4;
+    --basil: #2F6B3A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #1C1A19;
+      --paper: #252220;
+      --ink: #EFE9E3;
+      --muted: #B3A89F;
+      --rule: #3A3532;
+      --tomato: #F07A5C;
+      --tomato-soft: #3A2520;
+      --basil: #7CC08A;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #1C1A19;
+    --paper: #252220;
+    --ink: #EFE9E3;
+    --muted: #B3A89F;
+    --rule: #3A3532;
+    --tomato: #F07A5C;
+    --tomato-soft: #3A2520;
+    --basil: #7CC08A;
+  }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font: 17px/1.6 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+    padding-inline: 16px;
+  }
+  main {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding-block: 40px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  header { display: flex; flex-direction: column; gap: 4px; }
+  .brand {
+    font-family: Pacifico, "Brush Script MT", cursive;
+    font-size: 2.6rem;
+    line-height: 1.5;
+    color: var(--tomato);
+    margin: 0;
+  }
+  h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  .meta { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+  .summary {
+    background: var(--tomato-soft);
+    border-radius: 14px;
+    padding: 18px 20px;
+    font-size: 1.05rem;
+  }
+  .summary p { margin: 0; }
+  .summary strong { color: var(--tomato); }
+  section { display: flex; flex-direction: column; gap: 8px; }
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+  p, ul { margin: 0; }
+  ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 6px; }
+  .perm { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: 10px 18px; margin: 4px 0 0; }
+  .perm dt { font-weight: 700; }
+  .perm dd { margin: 0; }
+  @media (max-width: 520px) {
+    .perm { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .perm dd { margin-bottom: 10px; }
+  }
+  a { color: var(--tomato); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--tomato); outline-offset: 3px; border-radius: 4px; }
+  .contact {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    background: var(--paper); border: 1px solid var(--rule);
+    border-radius: 12px; padding: 12px 14px;
+  }
+  .email { font-weight: 700; user-select: all; word-break: break-all; }
+  button {
+    font: inherit; font-size: 0.9rem;
+    border: 1px solid var(--rule); background: var(--ground); color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer; min-height: 36px;
+  }
+  footer { border-top: 1px solid var(--rule); padding-top: 18px; color: var(--muted); font-size: 0.9rem; }
+</style>
+<style>
+  html{color-scheme:light dark} body{margin:0}
+  .logo{background:#fff;border-radius:18px;padding:14px 20px;align-self:flex-start;border:1px solid var(--rule)}
+  .logo img{display:block;width:260px;max-width:100%;height:auto}
+  .app{display:flex;flex-direction:column;gap:6px;background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:18px 20px}
+  .app .brand{font-size:2rem}
+  .links{display:flex;flex-wrap:wrap;gap:8px 18px}
+</style>
+</head>
+<body>
+<main>
+  <div class="logo"><img src="flux_studios.png" alt="FLuX Studios. Crafted by One. Built for Many." width="454" height="208"></div>
+  <p>FLuX Studios is an independent developer making simple, carefully built apps.</p>
+  <section>
+    <h2>Apps</h2>
+    <div class="app">
+      <p class="brand">DoughBoy</p>
+      <p>A big-button pizza dough calculator for Android: pick a style and a time, and it works out the flour, water, salt and yeast, with reminders for each step.</p>
+      <div class="links">
+        <a href="doughboy/privacy.html">Privacy policy</a>
+        <span>Coming soon to Google Play</span>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Contact</h2>
+    <p><a href="mailto:FLuXappStudios@gmail.com">FLuXappStudios@gmail.com</a></p>
+  </section>
+  <footer>© 2026 FLuX Studios</footer>
+</main>
+</body>
+</html>
