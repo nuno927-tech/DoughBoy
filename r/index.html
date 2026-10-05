@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A DoughBoy recipe</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Someone shared a dough recipe from DoughBoy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF8F4; --card: #FFFFFF; --text: #2B2724; --muted: #6A615A;
+    --accent: #C23B1E; --on-accent: #FFFFFF; --line: #E8DFD6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #1C1A19; --card: #252220; --text: #EFE9E3; --muted: #B3A89F;
+      --accent: #F07A5C; --on-accent: #1C1A19; --line: #3A3532;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+    font: 16px/1.5 "Atkinson Hyperlegible", system-ui, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 24px 16px;
+  }
+  main {
+    width: 100%; max-width: 420px; background: var(--card); border-radius: 24px;
+    padding: 28px 22px; text-align: center; border: 1px solid var(--line);
+  }
+  .brand { color: var(--accent); font-family: Pacifico, "Brush Script MT", cursive; font-size: 34px; line-height: 1.4; margin: 0; }
+  h1 { font-size: 22px; margin: 14px 0 6px; overflow-wrap: anywhere; }
+  p { color: var(--muted); margin: 0 0 18px; }
+  .btn {
+    display: block; width: 100%; padding: 15px 18px; border-radius: 14px; border: 0;
+    font: inherit; font-weight: 800; font-size: 17px; text-decoration: none; cursor: pointer;
+    margin-top: 10px;
+  }
+  .primary { background: var(--accent); color: var(--on-accent); }
+  .secondary { background: transparent; color: var(--text); border: 2px solid var(--line); }
+  .small { font-size: 13.5px; margin-top: 16px; margin-bottom: 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">DoughBoy</p>
+  <h1 id="title">A dough recipe for you</h1>
+  <p id="lead">Someone shared a recipe from DoughBoy.</p>
+
+  <div id="android" hidden>
+    <a class="btn primary" id="open" href="#">Open in DoughBoy</a>
+    <a class="btn secondary" id="get" href="#">Get DoughBoy on Google Play</a>
+    <p class="small">Already have it? If it doesn't open, copy the link, then in DoughBoy go to My Favorites &rarr; Import.</p>
+    <button class="btn secondary" id="copy" type="button">Copy link</button>
+  </div>
+
+  <div id="other" hidden>
+    <p>DoughBoy is an Android app. Open this link on your Android phone, or get DoughBoy from Google Play.</p>
+    <a class="btn primary" id="get2" href="#">Get DoughBoy on Google Play</a>
+  </div>
+
+  <div id="bad" hidden>
+    <p>This link is missing its recipe. Ask for it to be shared again.</p>
+  </div>
+</main>
+<script>
+(function () {
+  var pkg = 'com.fluxappstudios.doughboy';
+  var play = 'https://play.google.com/store/apps/details?id=' + pkg;
+  var r = new URLSearchParams(location.search).get('r') || '';
+  var ok = /^[A-Za-z0-9_\-]+$/.test(r);
+  var android = /Android/i.test(navigator.userAgent);
+
+  document.getElementById('get').href = play;
+  document.getElementById('get2').href = play;
+
+  if (!ok) { document.getElementById('bad').hidden = false; return; }
+
+  // The recipe's name, from the link itself (nothing leaves the phone).
+  try {
+    var b = r.replace(/-/g, '+').replace(/_/g, '/');
+    while (b.length % 4) b += '=';
+    var bytes = Uint8Array.from(atob(b), function (c) { return c.charCodeAt(0); });
+    var data = JSON.parse(new TextDecoder().decode(bytes));
+    if (data && typeof data.n === 'string' && data.n.trim()) {
+      document.getElementById('title').textContent = '“' + data.n.trim() + '”';
+      document.title = data.n.trim() + ' · DoughBoy';
+    }
+  } catch (e) { /* keep the generic title */ }
+
+  if (!android) { document.getElementById('other').hidden = false; return; }
+
+  var intent = 'intent://recipe?r=' + r +
+      '#Intent;scheme=doughboy;package=' + pkg +
+      ';S.browser_fallback_url=' + encodeURIComponent(play) + ';end';
+  document.getElementById('open').href = intent;
+  document.getElementById('android').hidden = false;
+  document.getElementById('lead').textContent = 'Tap below to open this dough in DoughBoy.';
+
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this;
+    navigator.clipboard.writeText(location.href).then(function () {
+      btn.textContent = 'Link copied';
+    }, function () {
+      btn.textContent = 'Couldn’t copy';
+    });
+  });
+})();
+</script>
+</body>
+</html>
