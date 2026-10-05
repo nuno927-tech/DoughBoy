@@ -101,6 +101,30 @@
   document.getElementById('android').hidden = false;
   document.getElementById('lead').textContent = 'Tap below to open this dough in DoughBoy.';
 
+  // Straight into the app: try it as soon as the page opens. If DoughBoy
+  // isn't installed, Chrome comes back here (stay=1) and the page stays,
+  // with Google Play and the buttons above.
+  var params = new URLSearchParams(location.search);
+  if (!params.has('stay')) {
+    params.set('stay', '1');
+    var back = location.origin + location.pathname + '?' + params.toString();
+    var auto = 'intent://recipe?r=' + r +
+        '#Intent;scheme=doughboy;package=' + pkg +
+        ';S.browser_fallback_url=' + encodeURIComponent(back) + ';end';
+    document.getElementById('lead').textContent = 'Opening DoughBoy…';
+    setTimeout(function () {
+      location.href = auto;
+      // Still here a moment later (blocked or no app): back to the buttons.
+      setTimeout(function () {
+        document.getElementById('lead').textContent =
+            'Tap below to open this dough in DoughBoy.';
+      }, 1500);
+    }, 50);
+  } else {
+    document.getElementById('lead').textContent =
+        'Didn’t open? Tap below, or get DoughBoy free on Google Play.';
+  }
+
   document.getElementById('copy').addEventListener('click', function () {
     var btn = this;
     navigator.clipboard.writeText(location.href).then(function () {
